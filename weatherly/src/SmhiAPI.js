@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import test from './static/day.svg'
-import jsonData from '.tempResponse.json'
 
 export default function SmhiAPI() {
-    //const [weather, setWeather] = useState(todaysWeather);    
+    const [weather, setWeather] = useState(todaysWeather);    
 
     function todaysWeather(){
         /*  Hämtar väderdata från getWeather
@@ -15,8 +14,8 @@ export default function SmhiAPI() {
             TODO: weatherObj:
                 * se till att vi får rätt dag för Day
                 * bestäm tillsammans hur vi ska göra med temperaturer*/
-        const smhiData = await getWeather();
-        const dateTime = await getDateTime();
+        const smhiData = getWeather();
+        const dateTime = getDateTime();
         const timeIndex = smhiData.timeSeries.indexOf(dateTime);
         const timeSerie = smhiData.timeSeries[timeIndex];
         const weatherObj = [{
@@ -36,9 +35,9 @@ export default function SmhiAPI() {
             return todayTime
         }
         
-        return weatherObj
+        setWeather(weatherObj);
         }
-    }
+    
 
     async function getWeather() {
         const url = 'https://opendata-download-metanalys.smhi.se/api/category/mesan1g/version/2/geotype/point/lon/16.158/lat/58.5812/data.json';
@@ -79,7 +78,7 @@ export default function SmhiAPI() {
                         <td>20 Maj</td>
                         <td>14°</td>
                         <td>19°</td>
-                        <td>4 m/s</td>
+                        <td>{weather.windSpeed}4 m/s</td>
                         </tr>
                     </tbody>
 
