@@ -4,9 +4,17 @@ import test from './static/day.svg'
 import jsonData from '.tempResponse.json'
 
 export default function SmhiAPI() {
-    const [weather, setWeather] = useState(todaysWeather);    
+    //const [weather, setWeather] = useState(todaysWeather);    
 
     function todaysWeather(){
+        /*  Hämtar väderdata från getWeather
+            Hämtar och formaterar tiden enligt SMHIs format
+            Letar upp rätt index i svaret från SMHI
+            Lägger till de intressanta delarna i ett nytt objekt - weatherObj
+            
+            TODO: weatherObj:
+                * se till att vi får rätt dag för Day
+                * bestäm tillsammans hur vi ska göra med temperaturer*/
         const smhiData = await getWeather();
         const dateTime = await getDateTime();
         const timeIndex = smhiData.timeSeries.indexOf(dateTime);
@@ -20,9 +28,10 @@ export default function SmhiAPI() {
         }];
 
         async function getDateTime(){
+            /*  Hämtar dagens datum och formaterar enligt SMHIs format: 2022-05-19T11:00:00Z 
+                En prognos är för en timme åt gången så minuter och sekunder är irrelevanta för att senare hitta rätt index*/
             const today = new Date();
             const todayTime = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate() + "T" + today.getHours() + ":00:00Z";
-            //2022-05-19T11:00:00Z
     
             return todayTime
         }
