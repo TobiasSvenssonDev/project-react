@@ -4,22 +4,30 @@ import test from './static/day.svg'
 import jsonData from '.tempResponse.json'
 
 export default function SmhiAPI() {
-    const [weather, setWeather] = useState({jsonData});
-
-    const dateTime = getDateTime();
-
-    function getDateTime(){
-        const today = new Date();
-        const todayTime = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate() + "T" + today.getHours() + ":00:00Z";
-        //2022-05-19T11:00:00Z
-
-        return todayTime
-    }
+    const [weather, setWeather] = useState(todaysWeather);    
 
     function todaysWeather(){
+        const smhiData = await getWeather();
+        const dateTime = await getDateTime();
+        const timeIndex = smhiData.timeSeries.indexOf(dateTime);
+        const timeSerie = smhiData.timeSeries[timeIndex];
+        const weatherObj = [{
+            day: "Idag",
+            forecast: timeSerie.parameters.indexOf('Wsymb2').values[0],
+            lowTemp: "temp°",
+            highTemp: "temp°",
+            windSpeed: timeSerie.parameters.indexOf('WS').values[0]
+        }];
 
-        const timeIndex = weather.timeSeries.indexOf(dateTime);
-            
+        async function getDateTime(){
+            const today = new Date();
+            const todayTime = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate() + "T" + today.getHours() + ":00:00Z";
+            //2022-05-19T11:00:00Z
+    
+            return todayTime
+        }
+        
+        return weatherObj
         }
     }
 
