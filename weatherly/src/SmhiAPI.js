@@ -1,8 +1,27 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import test from './static/day.svg'
+import jsonData from '.tempResponse.json'
 
 export default function SmhiAPI() {
+    const [weather, setWeather] = useState({jsonData});
+
+    const dateTime = getDateTime();
+
+    function getDateTime(){
+        const today = new Date();
+        const todayTime = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate() + "T" + today.getHours() + ":00:00Z";
+        //2022-05-19T11:00:00Z
+
+        return todayTime
+    }
+
+    function todaysWeather(){
+
+        const timeIndex = weather.timeSeries.indexOf(dateTime);
+            
+        }
+    }
 
     async function getWeather() {
         const url = 'https://opendata-download-metanalys.smhi.se/api/category/mesan1g/version/2/geotype/point/lon/16.158/lat/58.5812/data.json';
@@ -20,6 +39,8 @@ export default function SmhiAPI() {
                 console.log(error + " FEL");
             });
     }
+
+
 
     return (
         <div>
