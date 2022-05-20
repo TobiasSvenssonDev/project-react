@@ -1,61 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import test from './static/day.svg'
 
 export default function SmhiAPI() {
-    const [weather, setWeather] = useState(todaysWeather);    
-
-    function todaysWeather(){
-        /*  Hämtar väderdata från getWeather
-            Hämtar och formaterar tiden enligt SMHIs format
-            Letar upp rätt index i svaret från SMHI
-            Lägger till de intressanta delarna i ett nytt objekt - weatherObj
-            
-            TODO: weatherObj:
-                * se till att vi får rätt dag för Day
-                * bestäm tillsammans hur vi ska göra med temperaturer*/
-        const smhiData = getWeather();
-        const dateTime = getDateTime();
-        const timeIndex = smhiData.timeSeries.indexOf(dateTime);
-        const timeSerie = smhiData.timeSeries[timeIndex];
-        const weatherObj = [{
-            day: "Idag",
-            forecast: timeSerie.parameters.indexOf('Wsymb2').values[0],
-            lowTemp: "temp°",
+    const url = 'https://opendata-download-metanalys.smhi.se/api/category/mesan1g/version/2/geotype/point/lon/16.158/lat/58.5812/data.json';
+    const [weather, setWeather] = useState({
+        day: 'test',
+            forecast: 2,
+            temp: 1 + "°C",
             highTemp: "temp°",
-            windSpeed: timeSerie.parameters.indexOf('WS').values[0]
-        }];
+            windSpeed: 3
 
-        async function getDateTime(){
-            /*  Hämtar dagens datum och formaterar enligt SMHIs format: 2022-05-19T11:00:00Z 
-                En prognos är för en timme åt gången så minuter och sekunder är irrelevanta för att senare hitta rätt index*/
-            const today = new Date();
-            const todayTime = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate() + "T" + today.getHours() + ":00:00Z";
+        });
     
-            return todayTime
-        }
-        
-        setWeather(weatherObj);
-        }
-    
+    axios.get(url).then(function (response) {
 
-    async function getWeather() {
-        const url = 'https://opendata-download-metanalys.smhi.se/api/category/mesan1g/version/2/geotype/point/lon/16.158/lat/58.5812/data.json';
+        console.log("SUCCESS");
+        console.log(response.data)
+        const weekday = new Date();
+        const options = { weekday: 'long' };
 
-        await axios.get(url)
-            .then(function (response) {
+        setWeather([...weather] = {
+            day: weekday.toLocaleDateString(undefined, options),
+            forecast: response.data.timeSeries[0].parameters[22].values[0],
+            temp: response.data.timeSeries[0].parameters[0].values[0] + "°C",
+            highTemp: "temp°",
+            windSpeed: response.data.timeSeries[0].parameters[6].values[0]
+        });
 
-                console.log("SUCCESS");
-                console.log(response.data)
 
-                return response.data
-
-            })
-            .catch(function (error) {
-                console.log(error + " FEL");
-            });
-    }
-
+    })
+        .catch(function (error) {
+            console.log(error + " FEL");
+        });
 
 
     return (
@@ -65,28 +42,24 @@ export default function SmhiAPI() {
                 <table className="table">
                     <thead>
                         <tr>
-                        <th scope="col">Dag</th>
-                        <th scope="col">Dygn</th>
-                        <th scope="col">L</th>
-                        <th scope="col">H</th>
-                        <th scope="col">Vind</th>
+                            <th scope="col">Dag</th>
+                            <th scope="col">Dygn</th>
+                            <th scope="col">Temp</th>
+                            <th scope="col">Vind</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr className="clickable-row" data-href="#">
-                        <td><img src={test} alt=""></img></td>
-                        <td>20 Maj</td>
-                        <td>14°</td>
-                        <td>19°</td>
-                        <td>{weather.windSpeed}4 m/s</td>
+                            <td><img src={test} alt=""></img></td>
+                            <td>{weather.day}</td>
+                            <td>{weather.temp}</td>
+                            <td>{weather.windSpeed}m/s</td>
                         </tr>
                     </tbody>
 
-                </table>    
-                <button className="btn btn-lg btn-success" onClick={getWeather}>Get started</button>
+                </table>
             </div>
-
         </div>
-        
+
     )
 }

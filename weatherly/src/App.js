@@ -1,4 +1,5 @@
 import SmhiAPI from "./SmhiAPI";
+import WeatherList from "./WeatherList";
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
             <br></br>
             <hr></hr>
             <SmhiAPI />
-            <weatherList />
+            <WeatherList />
           </div>
           <div className="col-md-2">
           </div>
