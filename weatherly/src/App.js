@@ -36,10 +36,12 @@ function App() {
                     </tr>
                   </thead>
                   <tbody>
-                    <td>
-                      {weekday}
-                    </td>
-                    <SmhiAPI />
+                    <tr>
+                      <td>
+                        {weekday}
+                      </td>
+                      <SmhiAPI />
+                    </tr>
                   </tbody>
                 </table>
               </div>
