@@ -5,6 +5,17 @@ import SmhiAPI from "./SmhiAPI";
 function App() {
   const weekday = new Date().toLocaleDateString(undefined, { weekday: 'long' });
 
+  function importAll(r) {
+    let images = {};
+    r.keys().map((item, index) => { images[item.replace('./static', '')] = r(item); });
+    return images;
+  }
+  
+  const images = importAll(require.context('./static', false, /\.(png|jpe?g|svg)$/));
+  console.log(images)
+  
+ 
+
   return (
     <div className="App">
       <div className="container">
@@ -40,7 +51,7 @@ function App() {
                       <td>
                         {weekday}
                       </td>
-                      <SmhiAPI />
+                      <SmhiAPI images={images}/>
                     </tr>
                   </tbody>
                 </table>
