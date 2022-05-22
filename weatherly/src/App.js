@@ -4,8 +4,10 @@ import SmhiAPI from "./SmhiAPI";
 
 function App() {
   const weekday = new Date().toLocaleDateString(undefined, { weekday: 'long' });
+  const capital = weekday.slice(0,1).toUpperCase() + weekday.slice(1, weekday.length)
 
   return (
+    <>
     <div className="App">
       <div className="container">
         <div className="row">
@@ -14,12 +16,8 @@ function App() {
           <div className="col">
             <div className="text-center">
               <h1>Weatherly</h1>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-                molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-                numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-                optio, eaque rerum!
-              </p>
+                <strong>Welcome to Weatherly!</strong>
+                <p>See the current weather in your location and find suggestions for activities suitable for the weather in yur area, enjoy!</p>
             </div>
             <br></br>
             <hr></hr>
@@ -38,7 +36,7 @@ function App() {
                   <tbody>
                     <tr>
                       <td>
-                        {weekday}
+                        {capital}
                       </td>
                       <SmhiAPI />
                     </tr>
@@ -53,6 +51,7 @@ function App() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 export default App;
