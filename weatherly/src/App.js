@@ -6,6 +6,17 @@ function App() {
   const weekday = new Date().toLocaleDateString(undefined, { weekday: 'long' });
   const capital = weekday.slice(0,1).toUpperCase() + weekday.slice(1, weekday.length)
 
+  function importAll(r) {
+    let images = {};
+    r.keys().map((item, index) => { images[item.replace('./static', '')] = r(item); });
+    return images;
+  }
+  
+  const images = importAll(require.context('./static', false, /\.(png|jpe?g|svg)$/));
+  console.log(images)
+  
+ 
+
   return (
     <>
     <div className="App">
@@ -38,7 +49,7 @@ function App() {
                       <td>
                         {capital}
                       </td>
-                      <SmhiAPI />
+                      <SmhiAPI images={images}/>
                     </tr>
                   </tbody>
                 </table>

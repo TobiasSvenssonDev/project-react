@@ -4,7 +4,7 @@ import test from './static/day.svg'
 
 const baseURL = "https://opendata-download-metanalys.smhi.se/api/category/mesan1g/version/2/geotype/point/lon/16.158/lat/58.5812/data.json";
 
-export default function SmhiAPI() {
+export default function SmhiAPI(props) {
     const [weather, setWeather] = React.useState(null);
 
     React.useEffect(() => {
