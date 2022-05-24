@@ -18,13 +18,13 @@ export default function SmhiAPI(props) {
     return (<>
         <td>
             <img src={test} alt="" />
-            {weather.timeSeries[0].parameters[22].values[0]}
+            {weather.timeSeries[0].parameters[18].values[0]}
         </td>
         <td>
-            {weather.timeSeries[0].parameters[0].values[0]}
+            {weather.timeSeries[0].parameters[10].values[0]}
         </td>
         <td>
-            {weather.timeSeries[0].parameters[6].values[0]}m/s
+            {weather.timeSeries[0].parameters[14].values[0]}m/s
         </td>
     </>
     )
