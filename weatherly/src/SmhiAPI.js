@@ -5,6 +5,9 @@ import test from './static/day.svg'
 const baseURL = "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/16.158/lat/58.5812/data.json";
 export default function SmhiAPI(props) {
     const [weather, setWeather] = React.useState([]);
+    const [geoLoc, setGeoloc] = React.useState([{"long": 12.233,
+"lat": 123.343}]);
+
     console.log(weather)
     console.log(props.referenceTime)
 
@@ -13,7 +16,7 @@ export default function SmhiAPI(props) {
             const SMHIData = [response.data]
             const weatherData = SMHIData.map((tSerie) =>
                 tSerie.timeSeries.filter((time) =>
-                    time.validTime == props.referenceTime).map((params) =>
+                    time.validTime === props.referenceTime).map((params) =>
                         params.parameters.map((val) =>
                             val.values))
             );
