@@ -4,27 +4,42 @@ import test from './static/day.svg'
 
 const baseURL = "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/16.158/lat/58.5812/data.json";
 export default function SmhiAPI(props) {
-    const [weather, setWeather] = React.useState(null);
+    const [weather, setWeather] = React.useState([]);
+    console.log(weather)
+    console.log(props.referenceTime)
 
     React.useEffect(() => {
         axios.get(baseURL).then((response) => {
-            console.log(response.data);
-            setWeather(response.data);
+            const SMHIData = [response.data]
+            const weatherData = SMHIData.map((tSerie) =>
+                tSerie.timeSeries.filter((time) =>
+                    time.validTime == props.referenceTime).map((params) =>
+                        params.parameters.map((val) =>
+                            val.values))
+            );
+            const weatherParameters = {
+                "temperature": weatherData[0][0][10],
+                "windSpeed": weatherData[0][0][14],
+                "weatherCode": weatherData[0][0][18]
+            }
+
+            setWeather(weatherParameters);
         });
     }, []);
 
     if (!weather) return null;
 
     return (<>
+
         <td>
             <img src={test} alt="" />
-            {weather.timeSeries[0].parameters[18].values[0]}
+            {weather.weatherCode}
         </td>
         <td>
-            {weather.timeSeries[0].parameters[10].values[0]}
+            {weather.temperature}
         </td>
         <td>
-            {weather.timeSeries[0].parameters[14].values[0]}m/s
+            {weather.windSpeed}m/s
         </td>
     </>
     )

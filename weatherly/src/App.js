@@ -3,8 +3,11 @@ import WeatherList from "./WeatherList";
 import SmhiAPI from "./SmhiAPI";
 
 function App() {
-  const weekday = new Date().toLocaleDateString(undefined, { weekday: 'long' });
+  const currentDate = new Date();
+  const dateTimeToString = currentDate.getFullYear() + "-" + ('0' + (currentDate.getMonth()+1)).slice(-2) + "-" + currentDate.getDate() + "T" + currentDate.getHours() + ":00:00Z";
+  const weekday = currentDate.toLocaleDateString(undefined, { weekday: 'long' });
   const capital = weekday.slice(0,1).toUpperCase() + weekday.slice(1, weekday.length)
+  console.log(dateTimeToString + "TIDEN");
 
   function importAll(r) {
     let images = {};
@@ -49,7 +52,7 @@ function App() {
                       <td>
                         {capital}
                       </td>
-                      <SmhiAPI images={images}/>
+                      <SmhiAPI images={images} referenceTime={dateTimeToString}/>
                     </tr>
                   </tbody>
                 </table>
