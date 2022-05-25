@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import WeatherList from "./WeatherList";
 import SmhiAPI from "./SmhiAPI";
 
@@ -6,19 +6,20 @@ function App() {
   const weekday = new Date().toLocaleDateString(undefined, { weekday: 'long' });
   const capital = weekday.slice(0,1).toUpperCase() + weekday.slice(1, weekday.length)
 
+
   function importAll(r) {
     let images = {};
     r.keys().map((item, index) => { images[item.replace('./static', '')] = r(item); });
     return images;
   }
-  
   const images = importAll(require.context('./static', false, /\.(png|jpe?g|svg)$/));
   console.log(images)
+
   
- 
 
   return (
     <>
+    
     <div className="App">
       <div className="container">
         <div className="row">
@@ -28,7 +29,8 @@ function App() {
             <div className="text-center">
               <h1>Weatherly</h1>
                 <strong>Welcome to Weatherly!</strong>
-                <p>See the current weather in your location and find suggestions for activities suitable for the weather in yur area, enjoy!</p>
+                <p>See the current weather in your location and find suggestions for 
+                  activities suitable for the weather in yur area, enjoy!</p>
             </div>
             <br></br>
             <hr></hr>
