@@ -21,8 +21,8 @@ export default function SmhiAPI(props) {
             console.log(SMHIData[0])
             const weatherData = SMHIData.map((tSerie) =>
                 tSerie.timeSeries.filter((time) =>
-                    time.validTime === dateTimeToString).map((params) =>
-                        params.parameters.map((val) =>
+                    time.validTime === dateTimeToString).map((parameter) =>
+                        parameter.parameters.map((val) =>
                             val.values))
             );
             //STÄDA BORT UTSKRIFT
