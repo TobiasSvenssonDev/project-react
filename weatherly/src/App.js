@@ -1,6 +1,7 @@
 import React from "react";
 import WeatherList from "./WeatherList";
 import SmhiAPI from "./SmhiAPI";
+import Map from "./Map";
 
 function App() {
   
@@ -25,6 +26,8 @@ function App() {
             <hr></hr>            
             <SmhiAPI />                 
             <WeatherList />
+            <Map />
+    
           </div>
           <div className="col-md-2">
           </div>
