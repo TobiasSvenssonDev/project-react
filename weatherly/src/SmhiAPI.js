@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Weather from './Weather';
+import Geolocation from './Geolocation';
 
 export default function SmhiAPI(props) {
     const [weather, setWeather] = useState([]);
@@ -13,10 +14,13 @@ export default function SmhiAPI(props) {
         const dateTimeToString = currentDate.getFullYear() + "-" + ('0' + (currentDate.getMonth() + 1)).slice(-2) + "-" + currentDate.getDate() + "T" + currentDate.getHours() + ":00:00Z";
         const weekday = currentDate.toLocaleDateString(undefined, { weekday: 'long' });
         const capitalWeekday = weekday.slice(0, 1).toUpperCase() + weekday.slice(1, weekday.length)
-        let urlLongitude = 16.158
-        let urlLatitude = 58.5812            
+        
+        //Const under borde hämtas från Geolocation.js, 
+        //men lyckas inte få det att funka, men att bryta ut dem i komponten funkar fint
+        const lat = position.coords.latitude;
+        const long =  position.coords.longitude;          
 
-        const baseURL = "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/"+urlLongitude+"/lat/"+urlLatitude+"/data.json"
+        const baseURL = "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/"+long+"/lat/"+lat+"/data.json"
         axios.get(baseURL).then((response) => {
             const SMHIData = [response.data]
             //STÄDA BORT UTSKRIFT
