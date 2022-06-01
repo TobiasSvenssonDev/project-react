@@ -1,4 +1,5 @@
 import React from 'react'
+import Activity from './Activity';
 
 function importAll(r) {
     let images = {};
@@ -10,6 +11,7 @@ const images = importAll(require.context('./static', false, /\.(png|jpe?g|svg)$/
 console.log(images)
 
 export default function Weather(props) {
+    const activityCode = props.weatherCode    
 
     console.log(props.weatherCode + "Väder")
     const myString = "./" + props.weatherCode + ".svg"
@@ -44,6 +46,7 @@ export default function Weather(props) {
                     </tr>
                 </tbody>
             </table>
+            <Activity activityCode={activityCode} />
         </>
     )
 }
