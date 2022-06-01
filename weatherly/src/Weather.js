@@ -15,17 +15,17 @@ export default function Weather(props) {
     return (
         <tr>
             <td>
-                {props.weather.date}
+                {props.weekday}
             </td>
             <td>
                 <img src={test} alt="" />
-                {props.weather.weatherCode}
+                {props.weatherCode}
             </td>
             <td>
-                {props.weather.temperature}
+                {props.temp}
             </td>
             <td>
-                {props.weather.windSpeed}m/s
+                {props.wind}m/s
             </td>
         </tr>
 
