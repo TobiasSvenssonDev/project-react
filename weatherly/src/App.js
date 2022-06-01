@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import Weather from "./Weather";
+import loading from "./animated/happy-sun.gif"
 
 class App extends Component {
   state = {
@@ -63,37 +64,26 @@ class App extends Component {
   render() {
     const { weekday, temp, wind, weatherCode, status } = this.state;
     if (!status) {
-      return (<div>Loading...</div>)
+      return (<div className="h-100 d-flex align-items-center justify-content-center">
+      <img src={loading} alt="Loading image" /></div>)
     } else {
       return (
         <div className="App">
           <div className="container">
             <div className="row">
-              <div className="col-md-2">
-                <div className="col">
-                  <div className="text-center">
-                    <h2>Vädret just nu</h2>
-                    <div>
-                      <table className="table">
-                        <thead>
-                          <tr>
-                            <th scope="col">Dag</th>
-                            <th scope="col">Väder</th>
-                            <th scope="col">Temp</th>
-                            <th scope="col">Vind</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <Weather weekday={weekday} temp={temp} wind={wind} weatherCode={weatherCode} />
-                        </tbody>
-                      </table>
-                    </div>
+              <div className="col">
+                <div className="text-center">
+                <h1>WEATHERLY</h1>
+                <strong>Välkommen till Weatherly!</strong>                
+                <p>Få det senaste vädret direkt där du befinner dig och få föreslagna aktiviteter som passar väderleksrapporten, ha det så kul!</p>                  
+                  <div>
+                    <Weather weekday={weekday} temp={temp} wind={wind} weatherCode={weatherCode} />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </div>        
       );
     }
   }
