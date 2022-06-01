@@ -1,6 +1,4 @@
 import React from 'react'
-import test from './static/day.svg'
-
 
 function importAll(r) {
     let images = {};
@@ -12,6 +10,11 @@ const images = importAll(require.context('./static', false, /\.(png|jpe?g|svg)$/
 console.log(images)
 
 export default function Weather(props) {
+
+    console.log(props.weatherCode + "Väder")
+    const myString = "./" + props.weatherCode + ".svg"
+    const myImgSrc = images[myString]
+    
     return (
         <>
             <h2>Vädret just nu</h2>
@@ -30,8 +33,7 @@ export default function Weather(props) {
                             {props.weekday}
                         </td>
                         <td>
-                            <img src={test} alt="" />
-                            {props.weatherCode}
+                        <img src={myImgSrc} alt="väderikon" />
                         </td>
                         <td>
                             {props.temp}

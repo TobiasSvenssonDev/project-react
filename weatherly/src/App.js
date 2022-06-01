@@ -26,7 +26,7 @@ class App extends Component {
     const capitalWeekday = weekday.slice(0, 1).toUpperCase() + weekday.slice(1, weekday.length)
 
     const baseURL = (`https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${parseFloat(longitude.toFixed(2))}/lat/${parseFloat(latitude.toFixed(2))}/data.json`)
-    const call = await axios.get(baseURL).then((response) => {
+    await axios.get(baseURL).then((response) => {
       console.log("SUCCESS")
       console.log(response.data.timeSeries[2].parameters[10].values[0])
       this.setState({
@@ -65,7 +65,7 @@ class App extends Component {
     const { weekday, temp, wind, weatherCode, status } = this.state;
     if (!status) {
       return (<div className="h-100 d-flex align-items-center justify-content-center">
-      <img src={loading} alt="Loading image" /></div>)
+      <img src={loading} alt="Loading" /></div>)
     } else {
       return (
         <div className="App">
