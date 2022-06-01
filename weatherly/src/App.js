@@ -70,22 +70,24 @@ class App extends Component {
           <div className="container">
             <div className="row">
               <div className="col-md-2">
-                <div className="text-center">
-                  <h2>Vädret just nu</h2>
-                  <div>
-                    <table className="table">
-                      <thead>
-                        <tr>
-                          <th scope="col">Dag</th>
-                          <th scope="col">Väder</th>
-                          <th scope="col">Temp</th>
-                          <th scope="col">Vind</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <Weather weekday={weekday} temp={temp} wind={wind} weatherCode={weatherCode} />
-                      </tbody>
-                    </table>
+                <div className="col">
+                  <div className="text-center">
+                    <h2>Vädret just nu</h2>
+                    <div>
+                      <table className="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Dag</th>
+                            <th scope="col">Väder</th>
+                            <th scope="col">Temp</th>
+                            <th scope="col">Vind</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <Weather weekday={weekday} temp={temp} wind={wind} weatherCode={weatherCode} />
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
