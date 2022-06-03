@@ -16,6 +16,7 @@ Utöver nedan beskrivna steg för att start en React-app, behöver följande ste
  * NodeJs måste vara installerat.
  * Npm måste vara installerat
 
+Starta appen på din maskin
  * Öppna appen i din text-editor
  * Öpnna en terminal i mappen weathely
  * Kör kommando: $: npm install, för att säkerställa att alla dependencies är på plats.
