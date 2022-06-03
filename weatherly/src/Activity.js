@@ -76,8 +76,8 @@ export default function Activity(props) {
     while (activity === null) {
       if (props.activityCode <= 5) {
         activity = activities.goodWeather[Math.floor(Math.random() * activities.goodWeather.length)]
-        if (findActivity.keyWord !== usedActivity.map((item) => item.activity.keyWord)) {
-          activity = findActivity
+        if (activity !== usedActivity.map((item) => item.activity.keyWord)) {
+          
           console.log(activity["text"] + "UTOMHUSAKTIVITET");
           saveToSession(activity);
         }
