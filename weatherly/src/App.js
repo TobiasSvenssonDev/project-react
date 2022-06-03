@@ -49,12 +49,6 @@ class App extends Component {
       .catch((err) => {
         this.setState({ errorMessage: err.message });
       });
-
-    this.timerID = setInterval(
-      () =>
-        this.getWeather(this.state.lat, this.state.lon),
-      60000
-    );
   }
 
   componentWillUnmount() {
