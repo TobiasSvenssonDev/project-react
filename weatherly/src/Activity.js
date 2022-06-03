@@ -119,6 +119,8 @@ export default function Activity(props) {
 
   }, [activities, props.activityCode]);
 
+  
+
   if (randomActivity) {
     return (<div>
       <h1><u>Activity</u></h1>
