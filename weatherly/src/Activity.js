@@ -58,7 +58,7 @@ export default function Activity(props) {
       const newSession = []
       currentSession.forEach(item => {
         if (item["expiration"] >= current) {
-          console.log(item)
+          
           newSession.push(item)
         }
       });
