@@ -71,18 +71,11 @@ export default function Activity(props) {
       sessionStorage.setItem("usedActivities", JSON.stringify(newSession));
     }
 
-    function getRandomActivity(randKey) {
-      const randAct = randKey[Math.floor(Math.random() * randKey.length)];
-      //activity = activities.goodWeather[Math.floor(Math.random() * activities.goodWeather.length)]
-      console.log(JSON.stringify(randAct) + "SLUMPIS");
-      return randAct
-    }
     let activity = null;
 
     while (activity === null) {
       if (props.activityCode <= 5) {
-        const randKey = activities.goodWeather;
-        const findActivity = getRandomActivity(randKey);
+        activity = activities.goodWeather[Math.floor(Math.random() * activities.goodWeather.length)]
         if (findActivity.keyWord !== usedActivity.map((item) => item.activity.keyWord)) {
           activity = findActivity
           console.log(activity["text"] + "UTOMHUSAKTIVITET");
