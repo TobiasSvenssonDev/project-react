@@ -5,11 +5,11 @@ export default function Activity(props) {
     console.log(props.activityCode + "KOD")
 
     const activities = {
-      "goodWeather":[{"text":"Spela fotboll", "search": "fotboll"}, {"text": "Bada", "search": "Bada"}, 
-      {"text": "Kasta frisbee", "search": "frisbee"}, {"text": "Spela minigolf", "search": "minigolf"}],
+      "goodWeather":[{"id": 01, "text":"Spela fotboll", "search": "fotboll"}, {"id": 02, "text": "Bada", "search": "Bada"}, 
+      {"id": 03, "text": "Kasta frisbee", "search": "frisbee"}, {"id": 04, "text": "Spela minigolf", "search": "minigolf"}],
 
-      "badWeather":[{"text": "Spela laserdome", "search": "laserdome"}, {"text": "Kör go-cart", "search": "gocart"},
-      {"text": "Dra och bowla", "search": "bowling"}, {"text": "Spela biljard", "search": "biljard"}],
+      "badWeather":[{"id": 01, "text": "Spela laserdome", "search": "laserdome"}, {"id": 02, "text": "Kör go-cart", "search": "gocart"},
+      {"id": 03, "text": "Dra och bowla", "search": "bowling"}, {"id": 04, "text": "Spela biljard", "search": "biljard"}]
     }
 
     let activity = null;
