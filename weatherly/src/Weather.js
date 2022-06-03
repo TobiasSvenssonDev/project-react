@@ -12,9 +12,7 @@ const images = importAll(require.context('./static', false, /\.(png|jpe?g|svg)$/
 
 
 export default function Weather(props) {
-    const activityCode = props.weatherCode    
-
-    console.log(props.weatherCode + "Väder")
+    const activityCode = props.weatherCode  
     const myString = "./" + props.weatherCode + ".svg"
     const myImgSrc = images[myString]
     

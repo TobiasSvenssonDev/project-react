@@ -21,14 +21,12 @@ class App extends Component {
 
   getWeather = async (latitude, longitude) => {
     const currentDate = new Date();
-    //const dateTimeToString = currentDate.getFullYear() + "-" + ('0' + (currentDate.getMonth() + 1)).slice(-2) + "-" + currentDate.getDate() + "T" + currentDate.getHours() + ":00:00Z";
     const weekday = currentDate.toLocaleDateString(undefined, { weekday: 'long' });
     const capitalWeekday = weekday.slice(0, 1).toUpperCase() + weekday.slice(1, weekday.length)
 
     const baseURL = (`https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${parseFloat(longitude.toFixed(2))}/lat/${parseFloat(latitude.toFixed(2))}/data.json`)
     await axios.get(baseURL).then((response) => {
       console.log("SUCCESS")
-      console.log(response.data.timeSeries[2].parameters[10].values[0])
       this.setState({
         lat: latitude,
         lon: longitude,
