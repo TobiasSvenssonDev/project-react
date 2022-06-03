@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState, useEffect } from "react";
 
 export default function Activity(props) {
     console.log(props.activityCode + "KOD")
@@ -13,12 +14,15 @@ export default function Activity(props) {
         activity = activities.goodWeather[Math.floor(Math.random() * activities.goodWeather.length)];
         console.log(activity + "UTOMHUSAKTIVITET");
 
-  
+        localStorage.setItem("suggested", JSON.stringify(activity));
+
       } else if (props.activityCode >= 6) {
         activity = activities.badWeather[Math.floor(Math.random() * activities.goodWeather.length)];
         console.log(activity + "INOMHUSAKTIVITET");
-        
+
+        localStorage.setItem("suggested", JSON.stringify(activity));
       };
+
     if (activity) {
   return (<div>
     <h1>Activity</h1>
