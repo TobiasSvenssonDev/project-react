@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import Weather from "./Weather";
-import loading from "./animated/happy-sun.gif"
+import loading from "./animated/happy-sun.gif";
+import Map from "./Map";
 
 class App extends Component {
   state = {
@@ -72,6 +73,8 @@ class App extends Component {
                 <p>Få det senaste vädret direkt där du befinner dig och få föreslagna aktiviteter som passar väderleksrapporten, ha det så kul!</p>                  
                   <div>
                     <Weather weekday={weekday} temp={temp} wind={wind} weatherCode={weatherCode} />
+                    <hr/>
+                    <Map />
                   </div>
                 </div>
               </div>
