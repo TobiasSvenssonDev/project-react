@@ -29,7 +29,7 @@ export default function SmhiAPI(props) {
             );
 
             //STÄDA BORT UTSKRIFT
-            console.log(weatherData + "DATA")
+            console.log(weatherData[0] + "DATA")
             const weatherParameters = {
                 "date": capitalWeekday,
                 "temperature": weatherData[0][0][10],
