@@ -1,69 +1,24 @@
-import React, { useEffect, useState } from 'react'
-/*
-function getStorage(){
-  let storage = JSON.parse(localStorage.getItem("suggested"));
-  if (storage == null){
-    const emptyStorage = []
-    localStorage.setItem("suggested", JSON.stringify(emptyStorage));
-    storage = JSON.parse(localStorage.getItem("suggested"));
-    return storage;
-  } else {
-    return storage;
-  }
+import React, { useEffect, useState } from 'react';
+
+function importAll(r) {
+  let images = {};
+  r.keys().map((item, index) => { images[item.replace('./activity', '')] = r(item); return images });
+  return images;
 }
 
-function saveLocalStorage(activity){
-  const now = new Date();
-  const timeStamp = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+now.getMinutes()+':00'
-  console.log(now + " Date")
-  console.log(timeStamp + " Expiration")
-  const usedActivities = getStorage()
-  console.log(usedActivities + " KOLLAHÄRDÅFÖRFAAAAN")
-  console.log(typeof(usedActivities))
-  const activityObject = {
-    activity: activity,
-    timeStamp: timeStamp
-  }
-  usedActivities.push(activityObject);
-  console.log(usedActivities + " SKITAPP")
-  
-  localStorage.setItem("suggested", JSON.stringify(usedActivities));
-}
+const images = importAll(require.context('./activity', false, /\.(png|jpe?g|svg)$/));
+console.log(images)
 
-const activities = {
-      "goodWeather":[{"text":"Spela fotboll", "search": "fotboll"}, {"text": "Bada", "search": "Badplats"}, 
-      {"text": "Kasta frisbee", "search": "frisbee"}, {"text": "Spela minigolf", "search": "minigolf"}, 
-      {"text": "Vandra", "search": "Vandringsled"}, {"text": "Grilla", "search": "Grillplats"}],
-      "badWeather":[{"text": "Spela laserdome", "search": "laserdome"}, {"text": "Kör go-cart", "search": "Gocart"},
-      {"text": "Dra och bowla", "search": "bowling"}, {"text": "Spela biljard", "search": "Biljard"}, 
-      {"text": "Dra till gymmet", "search": "Gym"}, {"text": "Åk till gallerian", "search": "köpcenter"}, {"text": "spela tv-spel", "search":"Arkad"}, {"text": "spela laserdome", "search": "Laserdome"}]
-    }
-
-    let activity = null;
-    if (props.activityCode <= 5) {
-        activity = activities.goodWeather[Math.floor(Math.random() * activities.goodWeather.length)];
-        console.log(activity["text"] + "UTOMHUSAKTIVITET");
-
-        saveLocalStorage(activity);
-
-      } else if (props.activityCode >= 6) {
-        activity = activities.badWeather[Math.floor(Math.random() * activities.goodWeather.length)];
-        console.log(activity + "INOMHUSAKTIVITET");
-
-        saveLocalStorage(activity);
-      };
-
-*/
 export default function Activity(props) {
   const [usedActivity, setUsedActivity] = useState(getSessionActivities);
   const [randomActivity, setRandomActivity] = useState(null);
   const [activities, setActivities] = useState(getStoredActivities);
   const [useableActivities, setUseableActivities] = useState(null);
- 
 
-  function getSessionActivities(){
+
+  function getSessionActivities() {
     let storedSession = JSON.parse(sessionStorage.getItem("usedActivities"));
-    if (!storedSession) {
+    if (storedSession === null) {
       const emptyStorage = []
       sessionStorage.setItem("usedActivities", JSON.stringify(emptyStorage))
       return JSON.parse(sessionStorage.getItem("usedActivities"))
@@ -79,8 +34,8 @@ export default function Activity(props) {
       { "text": "Vandra", "keyWord": "Vandringsled" }, { "text": "Grilla", "keyWord": "Grillplats" }],
       "badWeather": [{ "text": "Spela laserdome", "keyWord": "laserdome" }, { "text": "Kör go-cart", "keyWord": "Gocart" },
       { "text": "Dra och bowla", "keyWord": "bowling" }, { "text": "Spela biljard", "keyWord": "Biljard" },
-      { "text": "Dra till gymmet", "keyWord": "Gym" }, { "text": "Åk till gallerian", "keyWord": "köpcenter" }, 
-      { "text": "spela tv-spel", "keyWord": "Arkad" }, { "text": "spela laserdome", "keyWord": "Laserdome" }]
+      { "text": "Dra till gymmet", "keyWord": "Gym" }, { "text": "Åk till gallerian", "keyWord": "shopping" },
+      { "text": "spela tv-spel", "keyWord": "Arkad" }]
     }
     let storage = JSON.parse(localStorage.getItem("activities"));
     if (storage === null) {
@@ -91,16 +46,16 @@ export default function Activity(props) {
     }
   }
 
-  useEffect(() => {    
-    function saveToSession(activity){
+  useEffect(() => {
+    function saveToSession(activity) {
       let currentSession = getSessionActivities();
-      console.log(currentSession[0]["expiration"] + "CREED")
+      //console.log(currentSession[0]["expiration"] + "CREED")
       const now = new Date();
-      const current = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+now.getMinutes()+':00';
-      const timeStamp = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+(now.getMinutes()+1)+':00';
-      
-      console.log(timeStamp + "TIDEN"); 
-      
+      const current = now.getFullYear() + ':' + ('0' + (now.getMonth() + 1)).slice(-2) + ':' + now.getDate() + ':' + now.getHours() + ':' + now.getMinutes() + ':00';
+      const timeStamp = now.getFullYear() + ':' + ('0' + (now.getMonth() + 1)).slice(-2) + ':' + now.getDate() + ':' + now.getHours() + ':' + (now.getMinutes() + 1) + ':00';
+
+      console.log(timeStamp + "TIDEN");
+
       const updateSession = {
         activity: activity,
         expiration: timeStamp
@@ -108,7 +63,7 @@ export default function Activity(props) {
       currentSession.push(updateSession);
       const newSession = []
       currentSession.forEach(item => {
-        if (item["expiration"] >= current){
+        if (item["expiration"] >= current) {
           console.log(item)
           newSession.push(item)
         }
@@ -116,39 +71,47 @@ export default function Activity(props) {
       sessionStorage.setItem("usedActivities", JSON.stringify(newSession));
     }
 
-    function getRandomActivity(randKey){
+    function getRandomActivity(randKey) {
       const randAct = randKey[Math.floor(Math.random() * randKey.length)];
       //activity = activities.goodWeather[Math.floor(Math.random() * activities.goodWeather.length)]
       console.log(JSON.stringify(randAct) + "SLUMPIS");
       return randAct
     }
     let activity = null;
-    
+
     while (activity === null) {
       if (props.activityCode <= 5) {
         const randKey = activities.goodWeather;
         const findActivity = getRandomActivity(randKey);
-        if (findActivity.keyWord !== usedActivity.map((item)=> item.activity.keyWord)){
+        if (findActivity.keyWord !== usedActivity.map((item) => item.activity.keyWord)) {
           activity = findActivity
           console.log(activity["text"] + "UTOMHUSAKTIVITET");
-          saveToSession(activity);        
-        } 
+          saveToSession(activity);
+        }
 
       } else if (props.activityCode >= 6) {
         activity = activities.badWeather[Math.floor(Math.random() * activities.badWeather.length)];
-        if (activity !== usedActivity.map((item)=> item.activity.keyWord)){
-        console.log(activity["text"] + "INOMHUSAKTIVITET");
-        saveToSession(activity);
-      }}
+        if (activity !== usedActivity.map((item) => item.activity.keyWord)) {
+          console.log(activity["text"] + "INOMHUSAKTIVITET");
+          saveToSession(activity);
+        }
+      }
     }
-    setRandomActivity(activity["text"])
+    setRandomActivity(activity)
 
   }, [activities, props.activityCode]);
+
+  function getImg(activity){
+    const myString = "./" + activity["keyWord"] + ".jpg"
+    const myImgSrc = images[myString]
+    return myImgSrc
+  }
 
   if (randomActivity) {
     return (<div>
       <h1><u>Activity</u></h1>
-      <h2>{randomActivity}</h2>
+      <h2>{randomActivity["text"]}</h2>
+      <img src={getImg(randomActivity)} alt={randomActivity["keyWord"]} />
     </div>
     )
   }
