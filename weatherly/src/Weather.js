@@ -38,7 +38,7 @@ export default function Weather(props) {
                         <img src={myImgSrc} alt="väderikon" />
                         </td>
                         <td>
-                            {props.temp}
+                            {props.temp}°C
                         </td>
                         <td>
                             {props.wind}m/s

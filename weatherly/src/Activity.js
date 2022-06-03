@@ -4,8 +4,8 @@ export default function Activity(props) {
     console.log(props.activityCode + "KOD")
 
     const activities = {
-        "goodWeather": ["spela fotboll", "bada", "kasta frisbee", "spela volleyboll", "ta en promenad", "spela minigolf", "klipp gräsmattan"],
-        "badWeather": ["dra till laserdome", "gå och bowla", "spela tv-spel", "kör lite gokart", "spela biljard", "dra till gymmet", "rulla tummarna och vänta på bättre tider"]
+        "goodWeather": ["Spela fotboll", "Bada", "Kasta frisbee", "Spela volleyboll", "Ta en promenad", "Spela minigolf", "Klipp gräsmattan", "Sola", "Spring hinderbana"],
+        "badWeather": ["Dra till laserdome", "Gå och bowla", "Spela tv-spel", "Kör lite gokart", "Spela biljard", "Dra till gymmet", "Rulla tummarna och vänta på bättre tider"]
       }
 
     let activity = null;
@@ -21,8 +21,8 @@ export default function Activity(props) {
       };
     if (activity) {
   return (<div>
-    <div>Activity</div>
-    <p>{activity}</p>
+    <h1>Activity</h1>
+    <h2>{activity}</h2>
     </div>
   )
 }
