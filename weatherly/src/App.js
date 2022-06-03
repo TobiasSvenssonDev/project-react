@@ -57,7 +57,7 @@ class App extends Component {
   }
 
   render() {
-    const { weekday, temp, wind, weatherCode, status } = this.state;
+    const { lat, lon, weekday, temp, wind, weatherCode, status } = this.state;
     if (!status) {
       return (<div className="h-100 d-flex align-items-center justify-content-center">
       <img src={loading} alt="Loading" /></div>)
@@ -74,7 +74,7 @@ class App extends Component {
                   <div>
                     <Weather weekday={weekday} temp={temp} wind={wind} weatherCode={weatherCode} />
                     <hr/>
-                    <Home />
+                    <Home lat={lat} lon={lon}/>
                   </div>
                 </div>
               </div>
