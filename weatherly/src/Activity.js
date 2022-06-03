@@ -58,7 +58,7 @@ export default function Activity(props) {
   const [usedActivity, setUsedActivity] = useState(getSessionActivities);
   const [randomActivity, setRandomActivity] = useState(null);
   const [activities, setActivities] = useState(getStoredActivities);
-  const [useableActivities, setUseableActivities] = useState(checkSession)
+  const [useableActivities, setUseableActivities] = useState(null);
  
 
   function getSessionActivities(){
@@ -94,9 +94,11 @@ export default function Activity(props) {
   useEffect(() => {    
     function saveToSession(activity){
       let currentSession = getSessionActivities();
+      console.log(currentSession[0]["expiration"] + "CREED")
       const now = new Date();
-      const current = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+now.getMinutes()+':00'
-      const timeStamp = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+(now.getMinutes()+3)+':00'
+      const current = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+now.getMinutes()+':00';
+      const timeStamp = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+(now.getMinutes()+1)+':00';
+      
       console.log(timeStamp + "TIDEN"); 
       
       const updateSession = {
@@ -104,11 +106,19 @@ export default function Activity(props) {
         expiration: timeStamp
       }
       currentSession.push(updateSession);
-      sessionStorage.setItem("usedActivities", JSON.stringify(currentSession));
+      const newSession = []
+      currentSession.forEach(item => {
+        if (item["expiration"] >= current){
+          console.log(item)
+          newSession.push(item)
+        }
+      });
+      sessionStorage.setItem("usedActivities", JSON.stringify(newSession));
     }
 
     function getRandomActivity(randKey){
       const randAct = randKey[Math.floor(Math.random() * randKey.length)];
+      //activity = activities.goodWeather[Math.floor(Math.random() * activities.goodWeather.length)]
       console.log(JSON.stringify(randAct) + "SLUMPIS");
       return randAct
     }
@@ -125,16 +135,15 @@ export default function Activity(props) {
         } 
 
       } else if (props.activityCode >= 6) {
-        activity = activities.badWeather[Math.floor(Math.random() * activities.goodWeather.length)];
+        activity = activities.badWeather[Math.floor(Math.random() * activities.badWeather.length)];
         if (activity !== usedActivity.map((item)=> item.activity.keyWord)){
         console.log(activity["text"] + "INOMHUSAKTIVITET");
         saveToSession(activity);
       }}
     }
     setRandomActivity(activity["text"])
-    console.log(JSON.stringify(useableActivities) +" ANVÄNDBARA")
 
-  }, [activities, useableActivities, props.activityCode]);
+  }, [activities, props.activityCode]);
 
   if (randomActivity) {
     return (<div>
