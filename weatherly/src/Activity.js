@@ -60,11 +60,11 @@ export default function Activity(props) {
   const [activities, setActivities] = useState(getStoredActivities);
   console.log(activities["goodWeather"][0]["text"])
 
-
   function getSessionActivities(){
     let storedSession = JSON.parse(sessionStorage.getItem("usedActivities"));
     if (!storedSession) {
-      sessionStorage.setItem("usedActivities", JSON.stringify({}))
+      const emptyStorage = []
+      sessionStorage.setItem("usedActivities", JSON.stringify(emptyStorage))
       return JSON.parse(sessionStorage.getItem("usedActivities"))
     } else {
       return JSON.parse(sessionStorage.getItem("usedActivities"))
@@ -89,6 +89,18 @@ export default function Activity(props) {
     }
   }
 
+  function checkSession(){
+
+  }
+
+  function saveSession(activity){
+    let currentSession = getSessionActivities();
+    const now = new Date();
+    const timeStamp = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+(now.getMinutes()+10)+':00'
+    console.log(timeStamp + "TIDEN");
+    
+
+  }
 
   useEffect(() => {
 
@@ -106,9 +118,6 @@ export default function Activity(props) {
     setRandomActivity(activity["text"])
 
   }, [activities, props.activityCode]);
-
-
-
 
   if (randomActivity) {
     return (<div>
