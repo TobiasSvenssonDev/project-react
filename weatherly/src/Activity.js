@@ -28,7 +28,7 @@ export default function Activity(props) {
 
     if (activity) {
   return (<div>
-    <h1>Activity</h1>
+    <h1><u>Activity</u></h1>
     <h2>{activity.text}</h2>
     </div>
   )
