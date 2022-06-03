@@ -58,7 +58,32 @@ export default function Activity(props) {
   const [usedActivity, setUsedActivity] = useState(getSessionActivities);
   const [randomActivity, setRandomActivity] = useState(null);
   const [activities, setActivities] = useState(getStoredActivities);
+  const [useableActivities, setUseableActivities] = useState(checkSession)
   console.log(activities["goodWeather"][0]["text"])
+
+  function checkSession(){
+    
+    const stored = []
+    stored.push(getStoredActivities());
+    const session = getSessionActivities();
+    let available = new Array(stored.map((item) => item))
+    const test = available[0];
+    console.log(typeof(test))
+    console.log(test["goodWeather"])
+    console.log(JSON.stringify(available) + "AVAILABLES")
+    console.log(JSON.stringify(available[0]) + "HÄR")
+    let unAvailable = new Array(session.map((item) => item.activity.keyWord))
+    console.log(unAvailable +"UNAVAILABLE")
+
+
+    const useable = new Array(available.map((item) => item.goodWeather.filter(e => e.keyWord !== unAvailable.map((x) => x.activity.keyWord))));
+    return useable;
+/*
+    const now = new Date();
+    const timeStamp = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+now.getMinutes()+':00';
+    const nowFormatted = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+now.getMinutes()+':00';
+*/
+  }
 
   function getSessionActivities(){
     let storedSession = JSON.parse(sessionStorage.getItem("usedActivities"));
@@ -73,42 +98,44 @@ export default function Activity(props) {
 
   function getStoredActivities() {
     const activities = {
-      "goodWeather": [{ "text": "Spela fotboll", "search": "fotboll" }, { "text": "Bada", "search": "Badplats" },
-      { "text": "Kasta frisbee", "search": "frisbee" }, { "text": "Spela minigolf", "search": "minigolf" },
-      { "text": "Vandra", "search": "Vandringsled" }, { "text": "Grilla", "search": "Grillplats" }],
-      "badWeather": [{ "text": "Spela laserdome", "search": "laserdome" }, { "text": "Kör go-cart", "search": "Gocart" },
-      { "text": "Dra och bowla", "search": "bowling" }, { "text": "Spela biljard", "search": "Biljard" },
-      { "text": "Dra till gymmet", "search": "Gym" }, { "text": "Åk till gallerian", "search": "köpcenter" }, { "text": "spela tv-spel", "search": "Arkad" }, { "text": "spela laserdome", "search": "Laserdome" }]
+      "goodWeather": [{ "text": "Spela fotboll", "keyWord": "fotboll" }, { "text": "Bada", "keyWord": "Badplats" },
+      { "text": "Kasta frisbee", "keyWord": "frisbee" }, { "text": "Spela minigolf", "keyWord": "minigolf" },
+      { "text": "Vandra", "keyWord": "Vandringsled" }, { "text": "Grilla", "keyWord": "Grillplats" }],
+      "badWeather": [{ "text": "Spela laserdome", "keyWord": "laserdome" }, { "text": "Kör go-cart", "keyWord": "Gocart" },
+      { "text": "Dra och bowla", "keyWord": "bowling" }, { "text": "Spela biljard", "keyWord": "Biljard" },
+      { "text": "Dra till gymmet", "keyWord": "Gym" }, { "text": "Åk till gallerian", "keyWord": "köpcenter" }, 
+      { "text": "spela tv-spel", "keyWord": "Arkad" }, { "text": "spela laserdome", "keyWord": "Laserdome" }]
     }
     let storage = JSON.parse(localStorage.getItem("activities"));
     if (storage === null) {
       localStorage.setItem("activities", JSON.stringify(activities));
       return JSON.parse(localStorage.getItem("activities"))
     } else {
-      return JSON.parse(localStorage.getItem("activities"));
+      return storage;
     }
   }
 
-  function checkSession(){
-
-  }
-
-  function saveSession(activity){
-    let currentSession = getSessionActivities();
-    const now = new Date();
-    const timeStamp = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+(now.getMinutes()+10)+':00'
-    console.log(timeStamp + "TIDEN");
-    
-
-  }
-
-  useEffect(() => {
+  useEffect(() => {    
+    function saveToSession(activity){
+      let currentSession = getSessionActivities();
+      const now = new Date();
+      const timeStamp = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+(now.getMinutes()+10)+':00'
+      console.log(timeStamp + "TIDEN"); 
+      
+      const updateSession = {
+        activity: activity,
+        expiration: timeStamp
+      }
+      currentSession.push(updateSession);
+      sessionStorage.setItem("usedActivities", JSON.stringify(currentSession));
+    }
 
     let activity = null;
     while (activity === null) {
       if (props.activityCode <= 5) {
         activity = activities.goodWeather[Math.floor(Math.random() * activities.goodWeather.length)];
         console.log(activity["text"] + "UTOMHUSAKTIVITET");
+        saveToSession(activity);
 
       } else if (props.activityCode >= 6) {
         activity = activities.badWeather[Math.floor(Math.random() * activities.goodWeather.length)];
@@ -116,10 +143,9 @@ export default function Activity(props) {
       }
     }
     setRandomActivity(activity["text"])
+    console.log(JSON.stringify(useableActivities) +" ANVÄNDBARA")
 
-  }, [activities, props.activityCode]);
-
-  
+  }, [activities, useableActivities, props.activityCode]);
 
   if (randomActivity) {
     return (<div>
