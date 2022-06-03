@@ -9,6 +9,22 @@ Weatherly är en webbaserad applikation, som visar ditt lokala och sedan ger dig
 [GitHub](https://github.com/TobiasSvenssonDev/project-react/)
 
 ---
+
+# Kör appen lokalt på din dator
+Utöver nedan beskrivna steg för att start en React-app, behöver följande steg göras för att köra appen lokalt på din maskin:
+
+ * NodeJs måste vara installerat.
+ * Npm måste vara installerat
+
+ * Öppna appen i din text-editor
+ * Öpnna en terminal i mappen weathely
+ * Kör kommando: $: npm install, för att säkerställa att alla dependencies är på plats.
+ * Slutligen, kör kommando: $: npm start
+
+
+
+
+---
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
