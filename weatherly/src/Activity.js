@@ -58,7 +58,7 @@ export default function Activity(props) {
     const [usedActivity, setUsedActivity] = useState(null);
     const [activities, setActivity] = useState(JSON.parse(localStorage.getItem("activities")));
     const [randomActivity, setRandomActivity] = useState(null);
-    console.log(activities["goodWeather"][0]["text"] + " RANDOM")
+    //console.log(activities["goodWeather"][0]["text"] + " RANDOM")
 
     const activity = true;
     useEffect(()=>{
@@ -87,11 +87,6 @@ export default function Activity(props) {
       setRandomActivity(activity["text"])
 
     },[activities]);
-
-  
-
-
-    
 
     if (activity) {
   return (<div>
