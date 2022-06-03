@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import Weather from "./Weather";
 import loading from "./animated/happy-sun.gif";
-import Map from "./Map";
+import Home from "./Map";
 
 class App extends Component {
   state = {
@@ -74,7 +74,7 @@ class App extends Component {
                   <div>
                     <Weather weekday={weekday} temp={temp} wind={wind} weatherCode={weatherCode} />
                     <hr/>
-                    <Map />
+                    <Home />
                   </div>
                 </div>
               </div>

@@ -1,11 +1,12 @@
 import "./index.css"
-import { GoogleMap, useLoadScript} from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, Marker} from "@react-google-maps/api";
 
 export default function Home() {
-    const {} = useLoadScript({
+    const { isLoaded} = useLoadScript({
         googleMapsApiKey: "AIzaSyAHKVJZeVmEuvhIfiIIblC5YF_CaKRtmWI",
     });
 
+    if (!isLoaded) return <div>Loading...</div>
     return <Map />
 
 }
@@ -13,8 +14,8 @@ export default function Home() {
 function Map() {
     return  (
         <GoogleMap
-        zoom={10}
-        center={{ lat: 13.0333, lng: 55.5833 }}
+        zoom={12}
+        center={{ lat: 55.60587, lng: 13.00073 }}
         mapContainerClassName="map-container">
 
         </GoogleMap>
