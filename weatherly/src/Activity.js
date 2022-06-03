@@ -55,49 +55,66 @@ const activities = {
 
 */
 export default function Activity(props) {
-    const [usedActivity, setUsedActivity] = useState(null);
-    const [activities, setActivity] = useState(JSON.parse(localStorage.getItem("activities")));
-    const [randomActivity, setRandomActivity] = useState(null);
-    console.log(activities["goodWeather"][0]["text"] + " RANDOM")
+  const [usedActivity, setUsedActivity] = useState(getSessionActivities);
+  const [randomActivity, setRandomActivity] = useState(null);
+  const [activities, setActivities] = useState(getStoredActivities);
+  console.log(activities["goodWeather"][0]["text"])
 
-    const activity = true;
-    useEffect(()=>{
-      const activities = {
-        "goodWeather":[{"text":"Spela fotboll", "search": "fotboll"}, {"text": "Bada", "search": "Badplats"}, 
-        {"text": "Kasta frisbee", "search": "frisbee"}, {"text": "Spela minigolf", "search": "minigolf"}, 
-        {"text": "Vandra", "search": "Vandringsled"}, {"text": "Grilla", "search": "Grillplats"}],
-        "badWeather":[{"text": "Spela laserdome", "search": "laserdome"}, {"text": "Kör go-cart", "search": "Gocart"},
-        {"text": "Dra och bowla", "search": "bowling"}, {"text": "Spela biljard", "search": "Biljard"}, 
-        {"text": "Dra till gymmet", "search": "Gym"}, {"text": "Åk till gallerian", "search": "köpcenter"}, {"text": "spela tv-spel", "search":"Arkad"}, {"text": "spela laserdome", "search": "Laserdome"}]
-      }
+
+  function getSessionActivities(){
+    let storedSession = JSON.parse(sessionStorage.getItem("usedActivities"));
+    if (!storedSession) {
+      sessionStorage.setItem("usedActivities", JSON.stringify({}))
+      return JSON.parse(sessionStorage.getItem("usedActivities"))
+    } else {
+      return JSON.parse(sessionStorage.getItem("usedActivities"))
+    }
+  }
+
+  function getStoredActivities() {
+    const activities = {
+      "goodWeather": [{ "text": "Spela fotboll", "search": "fotboll" }, { "text": "Bada", "search": "Badplats" },
+      { "text": "Kasta frisbee", "search": "frisbee" }, { "text": "Spela minigolf", "search": "minigolf" },
+      { "text": "Vandra", "search": "Vandringsled" }, { "text": "Grilla", "search": "Grillplats" }],
+      "badWeather": [{ "text": "Spela laserdome", "search": "laserdome" }, { "text": "Kör go-cart", "search": "Gocart" },
+      { "text": "Dra och bowla", "search": "bowling" }, { "text": "Spela biljard", "search": "Biljard" },
+      { "text": "Dra till gymmet", "search": "Gym" }, { "text": "Åk till gallerian", "search": "köpcenter" }, { "text": "spela tv-spel", "search": "Arkad" }, { "text": "spela laserdome", "search": "Laserdome" }]
+    }
+    let storage = JSON.parse(localStorage.getItem("activities"));
+    if (storage === null) {
       localStorage.setItem("activities", JSON.stringify(activities));
-    }, []);
+      return JSON.parse(localStorage.getItem("activities"))
+    } else {
+      return JSON.parse(localStorage.getItem("activities"));
+    }
+  }
 
-    useEffect(()=>{
-      let activity = null;
-      while (activity === null){
+
+  useEffect(() => {
+
+    let activity = null;
+    while (activity === null) {
       if (props.activityCode <= 5) {
         activity = activities.goodWeather[Math.floor(Math.random() * activities.goodWeather.length)];
         console.log(activity["text"] + "UTOMHUSAKTIVITET");
-        
+
       } else if (props.activityCode >= 6) {
         activity = activities.badWeather[Math.floor(Math.random() * activities.goodWeather.length)];
         console.log(activity["text"] + "INOMHUSAKTIVITET");
-      }}
-      setRandomActivity(activity["text"])
+      }
+    }
+    setRandomActivity(activity["text"])
 
-    },[activities]);
-
-  
+  }, [activities, props.activityCode]);
 
 
-    
 
-    if (activity) {
-  return (<div>
-    <h1><u>Activity</u></h1>
-    <h2>{randomActivity}</h2>
+
+  if (randomActivity) {
+    return (<div>
+      <h1><u>Activity</u></h1>
+      <h2>{randomActivity}</h2>
     </div>
-  )
-}
+    )
+  }
 }
