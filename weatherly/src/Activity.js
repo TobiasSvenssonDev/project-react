@@ -59,31 +59,7 @@ export default function Activity(props) {
   const [randomActivity, setRandomActivity] = useState(null);
   const [activities, setActivities] = useState(getStoredActivities);
   const [useableActivities, setUseableActivities] = useState(checkSession)
-  console.log(activities["goodWeather"][0]["text"])
-
-  function checkSession(){
-    
-    const stored = []
-    stored.push(getStoredActivities());
-    const session = getSessionActivities();
-    let available = new Array(stored.map((item) => item))
-    const test = available[0];
-    console.log(typeof(test))
-    console.log(test["goodWeather"])
-    console.log(JSON.stringify(available) + "AVAILABLES")
-    console.log(JSON.stringify(available[0]) + "HÄR")
-    let unAvailable = new Array(session.map((item) => item.activity.keyWord))
-    console.log(unAvailable +"UNAVAILABLE")
-
-
-    const useable = new Array(available.map((item) => item.goodWeather.filter(e => e.keyWord !== unAvailable.map((x) => x.activity.keyWord))));
-    return useable;
-/*
-    const now = new Date();
-    const timeStamp = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+now.getMinutes()+':00';
-    const nowFormatted = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+now.getMinutes()+':00';
-*/
-  }
+ 
 
   function getSessionActivities(){
     let storedSession = JSON.parse(sessionStorage.getItem("usedActivities"));
@@ -119,7 +95,8 @@ export default function Activity(props) {
     function saveToSession(activity){
       let currentSession = getSessionActivities();
       const now = new Date();
-      const timeStamp = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+(now.getMinutes()+10)+':00'
+      const current = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+now.getMinutes()+':00'
+      const timeStamp = now.getFullYear()+':'+('0' + (now.getMonth() + 1)).slice(-2)+':'+now.getDate()+':'+now.getHours()+':'+(now.getMinutes()+3)+':00'
       console.log(timeStamp + "TIDEN"); 
       
       const updateSession = {
@@ -130,17 +107,29 @@ export default function Activity(props) {
       sessionStorage.setItem("usedActivities", JSON.stringify(currentSession));
     }
 
+    function getRandomActivity(randKey){
+      const randAct = randKey[Math.floor(Math.random() * randKey.length)];
+      console.log(JSON.stringify(randAct) + "SLUMPIS");
+      return randAct
+    }
     let activity = null;
+    
     while (activity === null) {
       if (props.activityCode <= 5) {
-        activity = activities.goodWeather[Math.floor(Math.random() * activities.goodWeather.length)];
-        console.log(activity["text"] + "UTOMHUSAKTIVITET");
-        saveToSession(activity);
+        const randKey = activities.goodWeather;
+        const findActivity = getRandomActivity(randKey);
+        if (findActivity.keyWord !== usedActivity.map((item)=> item.activity.keyWord)){
+          activity = findActivity
+          console.log(activity["text"] + "UTOMHUSAKTIVITET");
+          saveToSession(activity);        
+        } 
 
       } else if (props.activityCode >= 6) {
         activity = activities.badWeather[Math.floor(Math.random() * activities.goodWeather.length)];
+        if (activity !== usedActivity.map((item)=> item.activity.keyWord)){
         console.log(activity["text"] + "INOMHUSAKTIVITET");
-      }
+        saveToSession(activity);
+      }}
     }
     setRandomActivity(activity["text"])
     console.log(JSON.stringify(useableActivities) +" ANVÄNDBARA")
